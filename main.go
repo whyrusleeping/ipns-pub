@@ -22,7 +22,6 @@ import (
 	"gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/peer"
 
 	"gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
-	//logging "gx/ipfs/Qmazh5oNUVsDZTs2g59rq8aYQqwpss8tcUWQzor5sCCEuH/go-log"
 
 	cli "github.com/codegangsta/cli"
 )
@@ -62,6 +61,23 @@ func fatal(i interface{}) {
 
 func main() {
 	app := cli.NewApp()
+	app.Name = "ipns-pub"
+	app.Usage = `ipns-pub can be used to publish an ipns entry with a given private key
+
+Example:
+
+    ipns-pub -key=mykeyfile /ipfs/QmcgpsyWgH8Y8ajJz1Cu72KnS5uo2Aa2LpzU7kinSupNKC
+
+Key Generation:
+
+To generate a key, install ipfs-key:
+
+    go get github.com/whyrusleeping/ipfs-key
+
+And then run:
+
+    ipfs-key > mykeyfile
+`
 	app.Flags = []cli.Flag{
 		cli.StringFlag{
 			Name:  "key",
