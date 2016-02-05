@@ -1,0 +1,22 @@
+{
+  "name": "ipns-pub",
+  "author": "whyrusleeping",
+  "version": "0.0.0",
+  "gxDependencies": [
+    {
+      "name": "go-multiaddr",
+      "hash": "QmR3JkmZBKYXgNMNsNZawm914455Qof3PEopwuVSeXG7aV",
+      "version": "0.0.0"
+    },
+    {
+      "name": "go-libp2p",
+      "hash": "QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4",
+      "version": "1.0.0"
+    }
+  ],
+  "language": "go",
+  "issues_url": "",
+  "gx": {
+    "dvcsimport": "github.com/whyrusleeping/ipns-pub"
+  }
+}
