@@ -22,7 +22,7 @@ import (
 	"gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/peer"
 
 	"gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
-	logging "gx/ipfs/Qmazh5oNUVsDZTs2g59rq8aYQqwpss8tcUWQzor5sCCEuH/go-log"
+	//logging "gx/ipfs/Qmazh5oNUVsDZTs2g59rq8aYQqwpss8tcUWQzor5sCCEuH/go-log"
 
 	cli "github.com/codegangsta/cli"
 )
@@ -61,12 +61,15 @@ func fatal(i interface{}) {
 }
 
 func main() {
-	//logging.SetDebugLogging()
-	_ = logging.Configure
-	logging.SetLogLevel("swarm", "debug")
-
 	app := cli.NewApp()
-	app.Commands = []cli.Command{PublishCmd}
+	app.Flags = []cli.Flag{
+		cli.StringFlag{
+			Name:  "key",
+			Usage: "specify file containing key to publish with",
+		},
+	}
+	app.Action = pubFunc
+
 	err := app.Run(os.Args)
 	if err != nil {
 		fatal(err)
@@ -82,53 +85,44 @@ func loadKeyFile(fi string) (ci.PrivKey, error) {
 	return ci.UnmarshalPrivateKey(data)
 }
 
-var PublishCmd = cli.Command{
-	Name: "publish",
-	Flags: []cli.Flag{
-		cli.StringFlag{
-			Name:  "key",
-			Usage: "specify file containing key to publish with",
-		},
-	},
-	Action: func(c *cli.Context) {
-		var priv ci.PrivKey
-		if kf := c.String("key"); kf != "" {
-			pk, err := loadKeyFile(kf)
-			if err != nil {
-				fatal(err)
-			}
-
-			priv = pk
-		} else {
-			fatal("must specify key file with '--key'")
-		}
-
-		if !c.Args().Present() {
-			fatal("must specify path to publish")
-		}
-
-		p, err := path.ParsePath(c.Args().First())
+func pubFunc(c *cli.Context) {
+	var priv ci.PrivKey
+	if kf := c.String("key"); kf != "" {
+		pk, err := loadKeyFile(kf)
 		if err != nil {
 			fatal(err)
 		}
 
-		bs, err := getBootstrapAddrs()
-		if err != nil {
-			fatal(err)
-		}
+		priv = pk
+	} else {
+		fatal("must specify key file with '--key'")
+	}
 
-		dstore := ds.NewMapDatastore()
+	if !c.Args().Present() {
+		fatal("must specify path to publish")
+	}
 
-		dht, err := spawnDHT(priv, dstore, bs)
-		if err != nil {
-			fatal(err)
-		}
+	p, err := path.ParsePath(c.Args().First())
+	if err != nil {
+		fatal(err)
+	}
 
-		err = pubPath(dht, priv, dstore, p)
-		if err != nil {
-			fatal(err)
-		}
-	},
+	bs, err := getBootstrapAddrs()
+	if err != nil {
+		fatal(err)
+	}
+
+	dstore := ds.NewMapDatastore()
+
+	dht, err := spawnDHT(priv, dstore, bs)
+	if err != nil {
+		fatal(err)
+	}
+
+	err = pubPath(dht, priv, dstore, p)
+	if err != nil {
+		fatal(err)
+	}
 }
 
 func spawnDHT(pk ci.PrivKey, dstore repo.Datastore, bootstraps []ma.Multiaddr) (*dht.IpfsDHT, error) {
