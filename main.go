@@ -175,6 +175,10 @@ func spawnDHT(pk ci.PrivKey, dstore repo.Datastore, bootstraps []ma.Multiaddr) (
 
 	host := basichost.New(s)
 
+	idht := dht.NewDHT(context.Background(), host, dstore)
+	idht.Validator[IpnsValidatorTag] = namesys.IpnsRecordValidator
+	idht.Selector[IpnsValidatorTag] = namesys.IpnsSelectorFunc
+
 	errs := make(chan error)
 	for _, bsaddr := range bootstraps {
 		go func(bsa ma.Multiaddr) {
@@ -195,6 +199,8 @@ func spawnDHT(pk ci.PrivKey, dstore repo.Datastore, bootstraps []ma.Multiaddr) (
 				return
 			}
 			fmt.Printf("dial to %s succeeded!\n", iaddr.ID())
+
+			idht.Update(context.TODO(), iaddr.ID())
 			errs <- nil
 		}(bsaddr)
 	}
@@ -209,10 +215,6 @@ func spawnDHT(pk ci.PrivKey, dstore repo.Datastore, bootstraps []ma.Multiaddr) (
 	if good == 0 {
 		fatal("couldnt connect to any bootstrap peers")
 	}
-
-	idht := dht.NewDHT(context.Background(), host, dstore)
-	idht.Validator[IpnsValidatorTag] = namesys.IpnsRecordValidator
-	idht.Selector[IpnsValidatorTag] = namesys.IpnsSelectorFunc
 
 	return idht, nil
 }
