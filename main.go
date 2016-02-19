@@ -14,7 +14,7 @@ import (
 	path "github.com/ipfs/go-ipfs/path"
 	"github.com/ipfs/go-ipfs/repo"
 	"github.com/ipfs/go-ipfs/routing/dht"
-	"github.com/ipfs/go-ipfs/util/ipfsaddr"
+	"github.com/ipfs/go-ipfs/thirdparty/ipfsaddr"
 	ci "gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/crypto"
 	"gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/host/basic"
 	"gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/metrics"
