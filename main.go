@@ -8,18 +8,18 @@ import (
 
 	ds "github.com/ipfs/go-ipfs/Godeps/_workspace/src/github.com/ipfs/go-datastore"
 
-	ma "gx/ipfs/QmR3JkmZBKYXgNMNsNZawm914455Qof3PEopwuVSeXG7aV/go-multiaddr"
-
 	"github.com/ipfs/go-ipfs/namesys"
 	path "github.com/ipfs/go-ipfs/path"
 	"github.com/ipfs/go-ipfs/repo"
 	"github.com/ipfs/go-ipfs/routing/dht"
 	"github.com/ipfs/go-ipfs/thirdparty/ipfsaddr"
-	ci "gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/crypto"
-	"gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/host/basic"
-	"gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/metrics"
-	"gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/net/swarm"
-	"gx/ipfs/QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4/go-libp2p/p2p/peer"
+	"gx/ipfs/QmQGwpJy9P4yXZySmqkZEXCmbBpJUb8xntCv8Ca4taZwDC/go-libp2p-peer"
+	ci "gx/ipfs/QmUEUu1CM8bxBJxc3ZLojAi8evhTr4byQogWstABet79oY/go-libp2p-crypto"
+	"gx/ipfs/QmXJBB9U6e6ennAJPzk8E2rSaVGuHVR2jCxE9H9gPDtRrq/go-libp2p/p2p/host/basic"
+	"gx/ipfs/QmXJBB9U6e6ennAJPzk8E2rSaVGuHVR2jCxE9H9gPDtRrq/go-libp2p/p2p/metrics"
+	"gx/ipfs/QmXJBB9U6e6ennAJPzk8E2rSaVGuHVR2jCxE9H9gPDtRrq/go-libp2p/p2p/net/swarm"
+	ma "gx/ipfs/QmYzDkkgAEmrcNzFCiYo6L1dTX4EAG1gZkbtdbd9trL4vd/go-multiaddr"
+	pstore "gx/ipfs/QmZ62t46e9p7vMYqCmptwQC1RhRv5cpQ5cwoqYspedaXyq/go-libp2p-peerstore"
 
 	"gx/ipfs/QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt/go-net/context"
 
@@ -190,7 +190,7 @@ func spawnDHT(pk ci.PrivKey, dstore repo.Datastore, bootstraps []ma.Multiaddr) (
 
 	fmt.Println("Local peer ID: ", local.Pretty())
 
-	ps := peer.NewPeerstore()
+	ps := pstore.NewPeerstore()
 	ps.AddPrivKey(local, pk)
 	ps.AddPubKey(local, pub)
 
@@ -237,7 +237,7 @@ func doBootstrap(bh *basichost.BasicHost, idht *dht.IpfsDHT, bootstraps []ma.Mul
 				return
 			}
 
-			bh.Peerstore().AddAddr(iaddr.ID(), iaddr.Transport(), peer.PermanentAddrTTL)
+			bh.Peerstore().AddAddr(iaddr.ID(), iaddr.Transport(), pstore.PermanentAddrTTL)
 
 			ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
 			defer cancel()

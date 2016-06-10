@@ -4,13 +4,8 @@
   "version": "0.0.0",
   "gxDependencies": [
     {
-      "name": "go-multiaddr",
-      "hash": "QmR3JkmZBKYXgNMNsNZawm914455Qof3PEopwuVSeXG7aV",
-      "version": "0.0.0"
-    },
-    {
       "name": "go-libp2p",
-      "hash": "QmUBogf4nUefBjmYjn6jfsfPJRkmDGSeMhNj4usRKq69f4",
+      "hash": "QmXJBB9U6e6ennAJPzk8E2rSaVGuHVR2jCxE9H9gPDtRrq",
       "version": "1.0.0"
     }
   ],
