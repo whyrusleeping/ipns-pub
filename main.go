@@ -74,26 +74,26 @@ And then run:
 	}
 }
 
-func pubFunc(c *cli.Context) {
+func pubFunc(c *cli.Context) error {
 	var priv ci.PrivKey
 	if kf := c.String("key"); kf != "" {
 		pk, err := loadKeyFile(kf)
 		if err != nil {
-			fatal(err)
+			return err
 		}
 
 		priv = pk
 	} else {
-		fatal("must specify key file with '--key'")
+		return fmt.Errorf("must specify key file with '--key'")
 	}
 
 	if !c.Args().Present() {
-		fatal("must specify path to publish")
+		return fmt.Errorf("must specify path to publish")
 	}
 
 	p, err := path.ParsePath(c.Args().First())
 	if err != nil {
-		fatal(err)
+		return err
 	}
 
 	interv := c.String("interval")
@@ -101,7 +101,7 @@ func pubFunc(c *cli.Context) {
 	if interv != "" {
 		d, err := time.ParseDuration(interv)
 		if err != nil {
-			fatal(err)
+			return err
 		}
 
 		ticktime = d
@@ -109,14 +109,14 @@ func pubFunc(c *cli.Context) {
 
 	bs, err := getBootstrapAddrs()
 	if err != nil {
-		fatal(err)
+		return err
 	}
 
 	dstore := ds.NewMapDatastore()
 
 	dht, err := spawnDHT(priv, dstore, bs)
 	if err != nil {
-		fatal(err)
+		return err
 	}
 
 	nsys := namesys.NewRoutingPublisher(dht, dstore)
@@ -124,11 +124,11 @@ func pubFunc(c *cli.Context) {
 	// publish once in either case
 	err = nsys.Publish(context.TODO(), priv, p)
 	if err != nil {
-		fatal(err)
+		return err
 	}
 
 	if !c.Bool("daemon") {
-		return
+		return nil
 	}
 
 	for range time.Tick(ticktime) {
@@ -137,10 +137,11 @@ func pubFunc(c *cli.Context) {
 		err = nsys.Publish(context.TODO(), priv, p)
 		if err != nil {
 			// TODO: probably don't want to actually error out and die here
-			fatal(err)
+			return err
 		}
 		fmt.Println("publish took: ", time.Now().Sub(before))
 	}
+	return nil
 }
 
 // currently just uses the ipfs core bootstrap nodes
