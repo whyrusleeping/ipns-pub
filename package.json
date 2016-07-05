@@ -1,17 +1,56 @@
 {
-  "name": "ipns-pub",
   "author": "whyrusleeping",
-  "version": "0.0.0",
-  "gxDependencies": [
-    {
-      "name": "go-libp2p",
-      "hash": "QmXJBB9U6e6ennAJPzk8E2rSaVGuHVR2jCxE9H9gPDtRrq",
-      "version": "1.0.0"
-    }
-  ],
-  "language": "go",
-  "issues_url": "",
+  "bugs": {},
   "gx": {
     "dvcsimport": "github.com/whyrusleeping/ipns-pub"
-  }
+  },
+  "gxDependencies": [
+    {
+      "hash": "QmZ8bCZpMWDbFSh6h2zgTYwrhnjrGM5c9WCzw72SU8p63b",
+      "name": "go-libp2p",
+      "version": "3.3.6"
+    },
+    {
+      "author": "jbenet",
+      "hash": "QmfQzVugPq1w5shWRcLWSeiHF4a2meBX7yVD8Vw7GWJM9o",
+      "name": "go-datastore",
+      "version": "0.1.2"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmZy2y8t9zQH2a1b8q2ZSLKp17ATuJoCNxxyMFG5qFExpt",
+      "name": "go-net",
+      "version": "0.0.0"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmQdnfvZQuhdT93LNc5bos52wAmdr3G2p6G8teLJMEN32P",
+      "name": "go-libp2p-peerstore",
+      "version": "1.1.2"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmYzDkkgAEmrcNzFCiYo6L1dTX4EAG1gZkbtdbd9trL4vd",
+      "name": "go-multiaddr",
+      "version": "0.0.0"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmRBqJF7hb8ZSpRcMwUt8hNhydWcxGEhtk81HKq6oUwKvs",
+      "name": "go-libp2p-peer",
+      "version": "1.0.8"
+    },
+    {
+      "author": "whyrusleeping",
+      "hash": "QmUWER4r4qMvaCnX5zREcfyiWN7cXN9g3a7fkRqNz8qWPP",
+      "name": "go-libp2p-crypto",
+      "version": "1.0.3"
+    }
+  ],
+  "gxVersion": "0.7.0",
+  "issues_url": "",
+  "language": "go",
+  "license": "",
+  "name": "ipns-pub",
+  "version": "0.0.0"
 }
