@@ -14,6 +14,11 @@ ipfs path to the ipns entry of your given key.
 
 ## Installation
 ```
+go get -d github.com/ipfs/go-ipfs
+cd $GOPATH/src/github.com/ipfs/go-ipfs
+git checkout 4fa85cc
+make deps
+
 go get -d github.com/whyrusleeping/ipns-pub
 cd $GOPATH/src/github.com/whyrusleeping/ipns-pub
 gx --verbose install --global
