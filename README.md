@@ -1,6 +1,6 @@
 # ipns-pub
 
-A tool to publish ipns entries on the ipfs network with a given key
+A tool to publish ipns entries on the ipfs network with a given key.  Presently [go-ipfs](https://github.com/ipfs/go-ipfs) only allows you to publish a single IPNS name with your peer ID using `ipfs publish`. With this tool you can use multiple keys to publish multiple IPNS names.
 
 ## Usage
 First, you'll need to generate a publish key with [`ipfs-key`](https://github.com/whyrusleeping/ipfs-key).
